@@ -25,5 +25,6 @@ urlpatterns = [
     path('',include('projectapi.urls')),
     path('',include('issueapi.urls')),
     path('',include('commentapi.urls')),
+    path('',include('eventapi.urls')),
     #path('', include('ticket_api.urls')),
 ]

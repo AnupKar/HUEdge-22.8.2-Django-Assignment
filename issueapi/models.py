@@ -16,6 +16,7 @@ class Issue(models.Model):
     status = models.CharField(max_length=100,choices=Status,default='available')
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     assignee = models.CharField(max_length=100)
+    #assignee = models.ForeignKey(User,blank=True,null=True,on_delete=models.CASCADE)
     reporter = models.ForeignKey(User,blank=True,null=True,on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     # status_id = models.ForeignKey(Status, on_delete=models.CASCADE)
