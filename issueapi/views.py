@@ -89,9 +89,11 @@ class IssueDetailById(APIView):
             old_data=Issue.objects.filter(id=id)
             s_data=IssueSerializer(old_data[0])
             updated_arr=[]
+            new_data['id']=id
             for key in s_data.data:
                 if s_data.data.get(key) != new_data.get(key):
                     updated_arr.append(key)
+            
             for each in updated_arr:
                 event_log_json  = {}
                 event_log_json["issue"] = s_data.data.get("id")
