@@ -16,10 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from .router import router
-
+from rest_framework_simplejwt import views as jwt_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('api/token/', jwt_views.TokenObtainPairView.as_view(),name="login"),
+    path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name ='token_refresh'),
     path('',include('projectapi.urls')),
-    path('',include('issueapi.urls'))
+    path('',include('issueapi.urls')),
+    path('',include('commentapi.urls')),
+    #path('', include('ticket_api.urls')),
 ]

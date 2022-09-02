@@ -1,5 +1,5 @@
 from django.urls import path
 from . import views
 urlpatterns = [
-    path('getissues/', views.getData),
+    path('issue/getissues/', views.IssueDetails.as_view()),
 ]
