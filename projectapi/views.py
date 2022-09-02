@@ -15,7 +15,8 @@ from .serializers import ProjectSerializer, ProjectWithUserSerializer
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 from django.http import Http404
-from rest_framework import status
+from rest_framework import status,filters
+from django_filters.rest_framework import DjangoFilterBackend
 '''
 @api_view(['GET'])
 def getData(request):
@@ -138,3 +139,12 @@ class CreateProject(APIView):
         creator_obj=User.objects.get(id=id)
         serializer.save(creator=creator_obj)
         return Response(serializer.data)
+
+class ProjectList(generics.ListCreateAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+    filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
+    filterset_fields = ['id','description','title']
+    search_fields=['id','description','title']

@@ -20,8 +20,8 @@ from userapi.models import User
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 from django.http import Http404
-from rest_framework import status
-
+from rest_framework import status,filters
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class IssueDetails(APIView):
@@ -112,6 +112,14 @@ class IssueDetailById(APIView):
         snippet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class IssueList(generics.ListCreateAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    queryset = Issue.objects.all()
+    serializer_class = IssueSerializer
+    filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
+    filterset_fields = ['id','description','title']
+    search_fields=['id','description','title']
 '''
 @api_view(['GET'])
 def getData(request):
